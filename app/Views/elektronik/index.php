@@ -28,7 +28,7 @@
                             <td><?= $product->getNama(); ?></td>
                             <td><?= $product->getHarga(); ?></td>
                             <td><?= $product->getType(); ?></td>
-                            <td><?= $product->getIsBaterai(); ?></td>
+                            <td><?= ($product->getIsBaterai() == 1) ? "true" : "false"; ?></td>
                             <td><?= $product->getAliranListrik() . "v"; ?></td>
                             <td>
                                 <a href="/elektronik/edit/<?= $product->getId(); ?>" class="btn btn-warning">Edit</a>

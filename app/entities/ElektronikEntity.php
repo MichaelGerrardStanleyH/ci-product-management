@@ -3,84 +3,45 @@
 namespace App\Entities;
 
 use CodeIgniter\Entity\Entity;
+use PhpParser\Node\Expr\Cast\Bool_;
 
 class ElektronikEntity extends ProductEntity
 {
-    protected $attributes = [
-        'is_baterai' => null,
-        'aliran_listrik' => null
-    ];
+    private bool $is_baterai;
+    private int $aliran_listrik;
 
-    // // Getter for Name
-    // public function getNama(): string
-    // {
-    //     return ucfirst($this->attributes['nama']); // Capitalize first letter
-    // }
-
-    // // Setter for Name
-    // public function setNama(string $nama)
-    // {
-    //     $this->attributes['nama'] = strtolower($nama); // Store in lowercase
-    //     return $this;
-    // }
-
-    // Getter for Name
-    public function getHarga(): string
+    public function __construct(array $data = [])
     {
-        return ucfirst($this->attributes['harga']); // Capitalize first letter
-    }
-
-    // Setter for Name
-    public function setHarga(string $nama)
-    {
-        $this->attributes['harga'] = strtolower($nama); // Store in lowercase
-        return $this;
-    }
-
-    // Getter for Type
-    public function getType(): string
-    {
-        return ucfirst($this->attributes['type']); // Capitalize first letter
-    }
-
-    // Setter for Type
-    public function setType(string $nama)
-    {
-        $this->attributes['type'] = strtolower($nama); // Store in lowercase
-        return $this;
+        if(!empty($data)){
+            $this->is_baterai = (bool) $data['is_baterai'] ?? false;
+            $this->aliran_listrik = (int) $data['aliran_listrik'] ?? 0;
+    
+            parent::__construct($data);
+        }
     }
 
     // Getter for AliranListrik
     public function getAliranListrik(): string
     {
-        return ucfirst($this->attributes['aliran_listrik']); // Capitalize first letter
+        return $this->aliran_listrik;
     }
 
     // Setter for AliranListrik
-    public function setAliranListrik(string $nama)
+    public function setAliranListrik(string $aliran_listrik)
     {
-        $this->attributes['aliran_listrik'] = strtolower($nama); // Store in lowercase
-        return $this;
+        $this->aliran_listrik=$aliran_listrik;
     }
 
     // Getter for IsBaterai
     public function getIsBaterai(): string
     {
-        return ucfirst($this->attributes['is_baterai']); // Capitalize first letter
+        return $this->is_baterai;
     }
 
     // Setter for IsBaterai
-    public function setIsBaterai(string $nama)
+    public function setIsBaterai(string $is_baterai)
     {
-        $this->attributes['is_baterai'] = strtolower($nama); // Store in lowercase
-        return $this;
+        $this->is_baterai=$is_baterai;
     }
     
-
-    // Custom method
-    public function getFullDetails()
-    {
-        // return "Elektronik: {$this->attributes['nama']} ({$this->attributes['harga']})";
-        return $this->attributes;
-    }
 }

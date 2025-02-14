@@ -4,44 +4,66 @@ namespace App\Entities;
 
 use CodeIgniter\Entity\Entity;
 
-class ProductEntity extends Entity
+class ProductEntity
 {
-    protected $attributes = [
-        'id' => null,
-        'nama' => null,
-        'harga' => null,
-        'type' =>  null
-    ];
 
-    // Getter for Name
-    public function getId(): string
+    private int $id;
+    private string $nama;
+    private int $harga;
+    private string $type;
+
+    public function __construct(array $data = [])
     {
-        return ucfirst($this->attributes['id']); // Capitalize first letter
+        if (!empty($data)) {
+            $this->id = (int) $data['id'] ?? 0;
+            $this->nama = (string) $data['nama'] ?? '';
+            $this->harga = (int) $data['harga'] ?? 0;
+            $this->type = (string) $data['type'] ?? '';
+        }
     }
 
-    // Setter for Name
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+
     public function setId(string $id)
     {
-        $this->attributes['id'] = strtolower($id); // Store in lowercase
-        return $this;
+        $this->id = $id;
     }
 
-    // Getter for Name
     public function getNama(): string
     {
-        return ucfirst($this->attributes['nama']); // Capitalize first letter
+        return $this->nama;
     }
 
-    // Setter for Name
+
     public function setNama(string $nama)
     {
-        $this->attributes['nama'] = strtolower($nama); // Store in lowercase
-        return $this;
+        $this->nama = $nama;
     }
 
-    // // Custom method
-    // public function getFullDetails(): string
-    // {
-    //     return "Elektronik: {$this->attributes['nama']} ({$this->attributes['harga']})";
-    // }
+    public function getHarga(): string
+    {
+        return $this->harga;
+    }
+
+
+    public function setHarga(string $harga)
+    {
+        $this->nama = $harga;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+
+    public function setType(string $type)
+    {
+        $this->nama = $type;
+    }
 }

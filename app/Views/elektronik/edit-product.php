@@ -32,7 +32,7 @@
                 <div class="row mb-3">
                     <label for="is_baterai" class="col-sm-2 col-form-label">Pakai Baterai</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="is_baterai" name="is_baterai" value="<?= $product->getIsBaterai(); ?>">
+                        <input type="text" class="form-control" id="is_baterai" name="is_baterai" value="<?= ($product->getIsBaterai() == 1) ? "true" : "false"; ?>">
                     </div>
                 </div>
                 <div class="row mb-3">

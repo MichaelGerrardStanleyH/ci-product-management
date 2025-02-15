@@ -16,3 +16,14 @@ input[type=number] {
 .image{
     width: 75px;
 }
+
+.login{
+    background-color: #a08679;
+    padding: 25px;
+    border-radius: 2%;
+}
+
+.wrong-password{
+    color: red;
+    font-weight: bold;
+}

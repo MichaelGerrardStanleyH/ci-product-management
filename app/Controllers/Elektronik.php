@@ -24,10 +24,15 @@ class Elektronik extends BaseController
 
     public function index()
     {
-        $sql = "SELECT * FROM electronic_product e INNER JOIN base_product b ON e.id_base_product=b.id_base_product;";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        try {
+            $sql = "SELECT * FROM electronic_product e INNER JOIN base_product b ON e.id_base_product=b.id_base_product;";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
 
         $products = [];
         while ($row = $result->fetch_assoc()) {
@@ -46,13 +51,18 @@ class Elektronik extends BaseController
     // 🔥 Ambil User Berdasarkan ID
     public function getProductById($id)
     {
-        $sql = "SELECT * FROM electronic_product e INNER JOIN base_product b ON e.id_base_product=b.id_base_product WHERE b.id_base_product = ?;";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $product = $result->fetch_assoc();
-        $stmt->close();
+
+        try {
+            $sql = "SELECT * FROM electronic_product e INNER JOIN base_product b ON e.id_base_product=b.id_base_product WHERE b.id_base_product = ?;";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $product = $result->fetch_assoc();
+            $stmt->close();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
 
         return $product ? new ElektronikEntity($product) : null;
     }
@@ -71,14 +81,14 @@ class Elektronik extends BaseController
     public function save()
     {
 
-        if(!$this->validate([
+        if (!$this->validate([
             'name' => [
                 'rules' => 'required|is_unique[base_product.name]',
             ],
             'electric' => [
                 'electric' => 'required',
             ]
-        ])){
+        ])) {
             return redirect()->to('/elektronik/create')->withInput();
         }
 
@@ -136,14 +146,14 @@ class Elektronik extends BaseController
 
     public function update($id)
     {
-        if(!$this->validate([
+        if (!$this->validate([
             'name' => [
-                'rules' => 'required|is_unique[base_product.name,id_base_product,' . $id .']',
+                'rules' => 'required|is_unique[base_product.name,id_base_product,' . $id . ']',
             ],
             'electric' => [
                 'electric' => 'required',
             ]
-        ])){
+        ])) {
             return redirect()->to('/elektronik/edit/' . $id)->withInput();
         }
 
@@ -193,14 +203,18 @@ class Elektronik extends BaseController
 
     public function delete($id)
     {
-        $stmt = $this->db->prepare("DELETE FROM base_product WHERE id_base_product = ?;");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $stmt->close();
-
-
+        try {
+            $stmt = $this->db->prepare("DELETE FROM base_product WHERE id_base_product = ?;");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $stmt->close();
+        } catch (Exception $e) {
+            $this->db->rollback();
+            throw new Exception($e->getMessage());
+        }
         return redirect()->to('/elektronik');
     }
+    
 
 
     public function product()

@@ -59,6 +59,8 @@ class Elektronik extends BaseController
 
     public function create()
     {
+        helper('form');
+
         $data = [
             'title' => 'Form Tambah Produk Elektronik',
         ];
@@ -68,6 +70,18 @@ class Elektronik extends BaseController
 
     public function save()
     {
+
+        if(!$this->validate([
+            'name' => [
+                'rules' => 'required|is_unique[base_product.name]',
+            ],
+            'electric' => [
+                'electric' => 'required',
+            ]
+        ])){
+            return redirect()->to('/elektronik/create')->withInput();
+        }
+
         $name = $this->request->getVar('name');
         $electric = $this->request->getVar('electric');
 

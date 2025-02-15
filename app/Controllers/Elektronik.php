@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Entities\ElektronikEntity;
 use App\Models\ProductElektronikModel;
 use App\Models\ElektronikModel;
+use Exception;
 
 class Elektronik extends BaseController
 {
@@ -14,7 +15,7 @@ class Elektronik extends BaseController
     public function __construct()
     {
         // Koneksi manual ke MySQLi
-        $this->db = new \mysqli('localhost', 'root', '12345', 'dika');
+        $this->db = new \mysqli('localhost', 'root', '12345', 'ci4');
 
         if ($this->db->connect_error) {
             die("Koneksi Gagal: " . $this->db->connect_error);
@@ -23,10 +24,8 @@ class Elektronik extends BaseController
 
     public function index()
     {
-        $type = 'elektronik';
-        $sql = "SELECT * FROM product WHERE type = ?";
+        $sql = "SELECT * FROM electronic_product e INNER JOIN base_product b ON e.id_base_product=b.id_base_product;";
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("s", $type);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -35,7 +34,6 @@ class Elektronik extends BaseController
             $product = new ElektronikEntity($row);
             $products[] = $product;
         }
-
 
         $data = [
             'title' => 'Electronic Product',
@@ -46,9 +44,10 @@ class Elektronik extends BaseController
 
 
     // 🔥 Ambil User Berdasarkan ID
-    public function getUserById($id)
+    public function getProductById($id)
     {
-        $stmt = $this->db->prepare("SELECT * FROM product WHERE id = ?");
+        $sql = "SELECT * FROM electronic_product e INNER JOIN base_product b ON e.id_base_product=b.id_base_product WHERE b.id_base_product = ?;";
+        $stmt = $this->db->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -69,16 +68,40 @@ class Elektronik extends BaseController
 
     public function save()
     {
-        $nama = $this->request->getVar('nama');
-        $harga = $this->request->getVar('harga');
-        $type = 'elektronik';
-        $isBaterai = ($this->request->getVar('is_baterai') == "true" ? true : false);
-        $aliranListrik = $this->request->getVar('aliran_listrik');
+        $name = $this->request->getVar('name');
+        $electric = $this->request->getVar('electric');
 
-        $sql = "INSERT INTO product (nama, harga, type, is_baterai, aliran_listrik) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("sisii", $nama, $harga, $type, $isBaterai, $aliranListrik);
-        $stmt->execute();
+        $imageFile = $this->request->getFile('image');
+
+        if ($imageFile->getError() == 4) {
+            $imageName = 'default.jpg';
+        } else {
+            $imageName = $imageFile->getRandomName();
+
+            $imageFile->move('img', $imageName);
+        }
+
+
+        $this->db->autocommit(false);
+
+        try {
+            $stmt = $this->db->prepare("INSERT INTO base_product(name, image) VALUES (?, ?)");
+            $stmt->bind_param("ss", $name, $imageName);
+            $stmt->execute();
+            $id_base_product = $stmt->insert_id;
+            $stmt->close();
+
+            $stmt = $this->db->prepare("INSERT INTO electronic_product(electric, id_base_product) VALUES (?,?)");
+            $stmt->bind_param("ii", $electric, $id_base_product);
+            $stmt->execute();
+
+            $stmt->close();
+
+            $this->db->commit();
+        } catch (Exception $e) {
+            $this->db->rollback();
+            throw new Exception($e->getMessage());
+        }
 
         return redirect()->to('/elektronik');
     }
@@ -86,7 +109,7 @@ class Elektronik extends BaseController
     public function edit($id)
     {
 
-        $product = $this->getUserById($id);
+        $product = $this->getProductById($id);
 
         $data = [
             'title' => 'Edit Elektronik Product',
@@ -98,24 +121,53 @@ class Elektronik extends BaseController
 
     public function update()
     {
-        $id = $this->request->getVar('id');
-        $nama = $this->request->getVar('nama');
-        $harga = $this->request->getVar('harga');
-        $type = 'elektronik';
-        $isBaterai = ($this->request->getVar('is_baterai') == "true" ? true : false);
-        $aliranListrik = $this->request->getVar('aliran_listrik');
+        $name = $this->request->getVar('name');
+        $electric = $this->request->getVar('electric');
+        $id_base_product = $this->request->getVar('idBaseProduct');
+        $id_electronic_product = $this->request->getVar('idElectronicProduct');
 
-        $stmt = $this->db->prepare("UPDATE product SET nama = ?, harga = ?, type = ?, is_baterai = ?, aliran_listrik = ? WHERE id = ?");
-        $stmt->bind_param("sisiii", $nama, $harga, $type, $isBaterai, $aliranListrik, $id);
-        $stmt->execute();
-        $stmt->close();
+        $imageFile = $this->request->getFile('image');
+
+        $oldImage = $this->request->getVar('oldImage');
+        if ($imageFile->getError() == 4) {
+            $imageName = $oldImage;
+        } else {
+            $imageName = $imageFile->getRandomName();
+
+            $imageFile->move('img', $imageName);
+
+            if ($oldImage != 'default.jpg') {
+                //hapus gambar
+                unlink('img/' . $oldImage);
+            }
+        }
+
+
+        $this->db->autocommit(false);
+
+        try {
+            $stmt = $this->db->prepare("UPDATE base_product SET name=?, image=?  WHERE id_base_product = ?");
+            $stmt->bind_param("ssi", $name, $imageName, $id_base_product);
+            $stmt->execute();
+            $stmt->close();
+
+            $stmt = $this->db->prepare("UPDATE electronic_product SET electric=?  WHERE id_electronic_product=?");
+            $stmt->bind_param("ii", $electric, $id_electronic_product);
+            $stmt->execute();
+            $stmt->close();
+
+            $this->db->commit();
+        } catch (Exception $e) {
+            $this->db->rollback();
+            throw new Exception($e->getMessage());
+        }
 
         return redirect()->to('/elektronik');
     }
 
     public function delete($id)
     {
-        $stmt = $this->db->prepare("DELETE FROM product WHERE id = ?");
+        $stmt = $this->db->prepare("DELETE FROM base_product WHERE id_base_product = ?;");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $stmt->close();

@@ -5,43 +5,43 @@ namespace App\Entities;
 use CodeIgniter\Entity\Entity;
 use PhpParser\Node\Expr\Cast\Bool_;
 
-class ElektronikEntity extends ProductEntity
+class ElektronikEntity extends BaseProductEntity
 {
-    private bool $is_baterai;
-    private int $aliran_listrik;
+    private int $id_electronic_product;
+    private int $electric;
 
     public function __construct(array $data = [])
     {
         if(!empty($data)){
-            $this->is_baterai = (bool) $data['is_baterai'] ?? false;
-            $this->aliran_listrik = (int) $data['aliran_listrik'] ?? 0;
+            $this->id_electronic_product = (int) $data['id_electronic_product'] ?? 0;
+            $this->electric = (int) $data['electric'] ?? 0;
     
             parent::__construct($data);
         }
     }
 
     // Getter for AliranListrik
-    public function getAliranListrik(): string
+    public function getElectric(): int
     {
-        return $this->aliran_listrik;
+        return $this->electric;
     }
 
     // Setter for AliranListrik
-    public function setAliranListrik(string $aliran_listrik)
+    public function setElectric(int $electric)
     {
-        $this->aliran_listrik=$aliran_listrik;
+        $this->electric=$electric;
     }
 
-    // Getter for IsBaterai
-    public function getIsBaterai(): string
+    // Getter for AliranListrik
+    public function getIdElectronicProduct(): int
     {
-        return $this->is_baterai;
+        return $this->id_electronic_product;
     }
 
-    // Setter for IsBaterai
-    public function setIsBaterai(string $is_baterai)
+    // Setter for AliranListrik
+    public function setIdElectronicProduct(int $id_electronic_product)
     {
-        $this->is_baterai=$is_baterai;
+        $this->id_electronic_product=$id_electronic_product;
     }
     
 }

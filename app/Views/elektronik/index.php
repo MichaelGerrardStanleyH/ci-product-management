@@ -12,12 +12,10 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Nama Barang</th>
-                        <th scope="col">Harga</th>
-                        <th scope="col">Tipe</th>
-                        <th scope="col">Pake Baterai</th>
-                        <th scope="col">Aliran listrik</th>
-                        <th scope="col">Aksi</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Electric</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,14 +23,12 @@
                     <?php foreach ($products as $product) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
-                            <td><?= $product->getNama(); ?></td>
-                            <td><?= $product->getHarga(); ?></td>
-                            <td><?= $product->getType(); ?></td>
-                            <td><?= ($product->getIsBaterai() == 1) ? "true" : "false"; ?></td>
-                            <td><?= $product->getAliranListrik() . "v"; ?></td>
+                            <td><?= $product->getName(); ?></td>
+                            <td><?= $product->getElectric(); ?></td>
+                            <td><img src="/img/<?= $product->getImage(); ?>" alt="" class="image"></td>
                             <td>
-                                <a href="/elektronik/edit/<?= $product->getId(); ?>" class="btn btn-warning">Edit</a>
-                                <form action="/elektronik/<?= $product->getId(); ?>" method="post" class="d-inline">
+                                <a href="/elektronik/edit/<?= $product->getIdBaseProduct(); ?>" class="btn btn-warning">Edit</a>
+                                <form action="/elektronik/<?= $product->getIdBaseProduct(); ?>" method="post" class="d-inline">
                                     <?= csrf_field(); ?>
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin?')">Delete</button>

@@ -6,43 +6,41 @@
         <div class="col-8">
             <h2 class="my-3">Form Edit Produk Elektronik</h1>
 
-            <form action="/elektronik/update" method="post">
-                <div class="row mb-3">
-                    <label for="nama" class="col-sm-2 col-form-label">Nama Barang</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nama" name="nama" value="<?= $product->getNama(); ?>">
+                <form action="/elektronik/update" method="post" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <label for="name" class="col-sm-2 col-form-label">Product Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="name" name="name" value="<?= $product->getName(); ?>">
+                        </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="harga" class="col-sm-2 col-form-label">Harga</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="harga" name="harga" value="<?= $product->getHarga(); ?>">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <input type="hidden" class="form-control" id="idBaseProduct" name="idBaseProduct" value="<?= $product->getIdBaseProduct(); ?>">
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-10"> 
-                        <input type="hidden" class="form-control" id="type" name="type" value="elektronik">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <input type="hidden" class="form-control" id="idElectronicProduct" name="idElectronicProduct" value="<?= $product->getIdElectronicProduct(); ?>">
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-10"> 
-                        <input type="hidden" class="form-control" id="id" name="id" value="<?= $product->getId(); ?>">
+                    <input type="hidden" name="oldImage" value="<?= $product->getImage(); ?>">
+                    <div class="row mb-3">
+                        <label for="electric" class="col-sm-2 col-form-label">Electric</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="electric" name="electric" value="<?= $product->getElectric(); ?>">
+                        </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="is_baterai" class="col-sm-2 col-form-label">Pakai Baterai</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="is_baterai" name="is_baterai" value="<?= ($product->getIsBaterai() == 1) ? "true" : "false"; ?>">
+                    <div class="form-group row">
+                        <label for="image" class="col-form-label col-sm-2">Pilih Gambar</label>
+                        <div class="col-sm-2">
+                            <img src="/img/<?= $product->getImage(); ?>" class="img-thumbnail img-preview">
+                        </div>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="file" id="image" name="image" onchange="previewImg()">
+                        </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="aliran_listrik" class="col-sm-2 col-form-label">Aliran Listrik</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="aliran_listrik" name="aliran_listrik" value="<?= $product->getAliranListrik(); ?>">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Edit Produk</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Edit Produk</button>
+                </form>
         </div>
     </div>
 </div>

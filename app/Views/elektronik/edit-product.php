@@ -6,11 +6,14 @@
         <div class="col-8">
             <h2 class="my-3">Form Edit Produk Elektronik</h1>
 
-                <form action="/elektronik/update" method="post" enctype="multipart/form-data">
+                <form action="/elektronik/update/<?= $product->getIdBaseProduct(); ?>" method="post" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <label for="name" class="col-sm-2 col-form-label">Product Name</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" name="name" value="<?= $product->getName(); ?>">
+                            <input type="text" class="form-control <?= validation_show_error('name') ? 'is-invalid' : ''; ?>" id="name" name="name" value="<?= $product->getName(); ?>">
+                        </div>
+                        <div class="row mb-3">
+                            <?= validation_show_error('name') ?>
                         </div>
                     </div>
                     <div class="row">
@@ -27,7 +30,10 @@
                     <div class="row mb-3">
                         <label for="electric" class="col-sm-2 col-form-label">Electric</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="electric" name="electric" value="<?= $product->getElectric(); ?>">
+                            <input type="number" class="form-control <?= validation_show_error('electric') ? 'is-invalid' : ''; ?>" id="electric" name="electric" value="<?= $product->getElectric(); ?>">
+                        </div>
+                        <div class="row mb-3">
+                            <?= validation_show_error('electric') ?>
                         </div>
                     </div>
                     <div class="form-group row">

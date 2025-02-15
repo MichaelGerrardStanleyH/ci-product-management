@@ -122,6 +122,7 @@ class Elektronik extends BaseController
 
     public function edit($id)
     {
+        helper('form');
 
         $product = $this->getProductById($id);
 
@@ -133,8 +134,19 @@ class Elektronik extends BaseController
         return view('/elektronik/edit-product', $data);
     }
 
-    public function update()
+    public function update($id)
     {
+        if(!$this->validate([
+            'name' => [
+                'rules' => 'required|is_unique[base_product.name,id_base_product,' . $id .']',
+            ],
+            'electric' => [
+                'electric' => 'required',
+            ]
+        ])){
+            return redirect()->to('/elektronik/edit/' . $id)->withInput();
+        }
+
         $name = $this->request->getVar('name');
         $electric = $this->request->getVar('electric');
         $id_base_product = $this->request->getVar('idBaseProduct');

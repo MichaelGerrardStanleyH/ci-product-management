@@ -12,6 +12,6 @@ $routes->get('/elektronik/edit/(:num)', 'Elektronik::edit/$1');
 
 
 $routes->post('/elektronik/save', 'Elektronik::save');
-$routes->post('/elektronik/update', 'Elektronik::update');
+$routes->post('/elektronik/update/(:num)', 'Elektronik::update/$1');
 $routes->delete('/elektronik/(:num)', 'Elektronik::delete/$1');
 

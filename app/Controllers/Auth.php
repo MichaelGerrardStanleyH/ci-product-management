@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+// Class controller AUTH
 class Auth extends BaseController
 {
 

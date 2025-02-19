@@ -5,6 +5,7 @@ namespace App\Entities;
 use CodeIgniter\Entity\Entity;
 use PhpParser\Node\Expr\Cast\Bool_;
 
+// child class FashionEntity
 class FashionEntity extends BaseProductEntity
 {
     private int $id_fashion_product;

@@ -5,6 +5,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 
+//Filter login
 class AuthFilter implements FilterInterface{
     public function before(RequestInterface $request, $arguments = null)
     {

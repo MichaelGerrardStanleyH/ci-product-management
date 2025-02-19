@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use CodeIgniter\Entity\Entity;
 
+// Parent class base product
 class BaseProductEntity
 {
 

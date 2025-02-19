@@ -8,6 +8,7 @@ use App\Models\ProductElektronikModel;
 use App\Models\ElektronikModel;
 use Exception;
 
+// Class controller fashion
 class Fashion extends BaseController
 {
 
@@ -23,6 +24,7 @@ class Fashion extends BaseController
         }
     }
 
+    // get all fashion product dari database yang return class view index.php
     public function index()
     {
         try {
@@ -49,7 +51,7 @@ class Fashion extends BaseController
     }
 
 
-    // 🔥 Ambil User Berdasarkan ID
+    // get fashion product by id dari database yang return class ElektronikEntity
     public function getProductById($id)
     {
 
@@ -68,17 +70,19 @@ class Fashion extends BaseController
         return $product ? new FashionEntity($product) : null;
     }
 
+    // return class view create.php 
     public function create()
     {
         helper('form');
 
         $data = [
-            'title' => 'Form Tambah Produk Fashion',
+            'title' => 'Add Fashion Product Form',
         ];
 
         return view('/fashion/add-product', $data);
     }
 
+    // insert produk elektronik ke database dan return kew view index.php
     public function save()
     {
 
@@ -131,6 +135,7 @@ class Fashion extends BaseController
         return redirect()->to('/fashion');
     }
 
+    //return class view edit-product.php
     public function edit($id)
     {
         helper('form');
@@ -138,13 +143,14 @@ class Fashion extends BaseController
         $product = $this->getProductById($id);
 
         $data = [
-            'title' => 'Edit Elektronik Product',
+            'title' => 'Edit Fashion Product Form',
             'product' => $product
         ];
 
         return view('/fashion/edit-product', $data);
     }
 
+    //update elektronik produk ke database dan return class view index.php
     public function update($id)
     {
         if (!$this->validate([
@@ -202,11 +208,12 @@ class Fashion extends BaseController
         return redirect()->to('/fashion');
     }
 
+    //delete produk elektronik by id dari database
     public function delete($id)
     {
         try {
             $product = $this->getProductById($id);
-            if($product->getImage() != 'default.jpg'){
+            if ($product->getImage() != 'default.jpg') {
                 unlink('img/' . $product->getImage());
             }
 
@@ -219,12 +226,5 @@ class Fashion extends BaseController
             throw new Exception($e->getMessage());
         }
         return redirect()->to('/fashion');
-    }
-
-
-
-    public function product()
-    {
-        return view('/fashion/index');
     }
 }

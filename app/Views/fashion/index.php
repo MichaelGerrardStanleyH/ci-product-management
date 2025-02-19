@@ -4,20 +4,18 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1>Ini halaman Elektronik</h1>
+            <h1>Electronic Product Page</h1>
 
-            <a href="/elektronik/create" class="btn btn-primary">Tambah Barang elektronik</a>
+            <a href="/fashion/create" class="btn btn-primary">Add Electronic Product</a>
 
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Nama Barang</th>
-                        <th scope="col">Harga</th>
-                        <th scope="col">Tipe</th>
-                        <th scope="col">Pake Baterai</th>
-                        <th scope="col">Aliran listrik</th>
-                        <th scope="col">Aksi</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,14 +23,12 @@
                     <?php foreach ($products as $product) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
-                            <td><?= $product->getNama(); ?></td>
-                            <td><?= $product->getHarga(); ?></td>
+                            <td><?= $product->getName(); ?></td>
                             <td><?= $product->getType(); ?></td>
-                            <td><?= $product->getIsBaterai(); ?></td>
-                            <td><?= $product->getAliranListrik() . "v"; ?></td>
+                            <td><img src="/img/<?= $product->getImage(); ?>" alt="" class="image"></td>
                             <td>
-                                <a href="/elektronik/edit/<?= $product->getId(); ?>" class="btn btn-warning">Edit</a>
-                                <form action="/elektronik/<?= $product->getId(); ?>" method="post" class="d-inline">
+                                <a href="/fashion/edit/<?= $product->getIdBaseProduct(); ?>" class="btn btn-warning">Edit</a>
+                                <form action="/fashion/<?= $product->getIdBaseProduct(); ?>" method="post" class="d-inline">
                                     <?= csrf_field(); ?>
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin?')">Delete</button>

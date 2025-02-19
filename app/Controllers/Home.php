@@ -8,23 +8,13 @@ use Attribute;
 class Home extends BaseController
 {
 
-    protected $productElektronik;
-
-    public function __construct()
-    {
-        $this->productElektronik = new ElektronikModel();
-    }
-
     public function index()
     {
-        $datas = $this->productElektronik->getAll(); // Now returns an array of UserEntity objects
+        $data = [
+            'title' => 'Home | Product Management'
+        ];
 
-        foreach($datas as $data){
-            echo $data->getName();
-            echo $data->getHarga();
-            echo $data->getType();
-            echo $data->getAliranListrik();
-            echo ($data->getIsBaterai() == 1 ? "true" : "false");
-        }
+       return view('/home', $data);
     }
+
 }

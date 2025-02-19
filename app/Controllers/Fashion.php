@@ -92,6 +92,9 @@ class Fashion extends BaseController
             ],
             'type' => [
                 'type' => 'required',
+            ],
+            'image' => [
+                'rules' => 'max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
             ]
         ])) {
             return redirect()->to('/fashion/create')->withInput();
@@ -159,6 +162,9 @@ class Fashion extends BaseController
             ],
             'type' => [
                 'type' => 'required',
+            ],
+            'image' => [
+                'rules' => 'max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
             ]
         ])) {
             return redirect()->to('/fashion/edit/' . $id)->withInput();

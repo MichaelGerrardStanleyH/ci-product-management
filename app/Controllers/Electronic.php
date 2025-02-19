@@ -91,6 +91,9 @@ class Electronic extends BaseController
             ],
             'electric' => [
                 'electric' => 'required',
+            ],
+            'image' => [
+                'rules' => 'max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
             ]
         ])) {
             return redirect()->to('/electronic/create')->withInput();
@@ -158,6 +161,9 @@ class Electronic extends BaseController
             ],
             'electric' => [
                 'electric' => 'required',
+            ],
+            'image' => [
+                'rules' => 'max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
             ]
         ])) {
             return redirect()->to('/electronic/edit/' . $id)->withInput();
@@ -213,7 +219,7 @@ class Electronic extends BaseController
         try {
 
             $product = $this->getProductById($id);
-            if($product->getImage() != 'default.jpg'){
+            if ($product->getImage() != 'default.jpg') {
                 unlink('img/' . $product->getImage());
             }
 
@@ -222,12 +228,10 @@ class Electronic extends BaseController
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $stmt->close();
-
         } catch (Exception $e) {
             $this->db->rollback();
             throw new Exception($e->getMessage());
         }
         return redirect()->to('/electronic');
     }
-    
 }

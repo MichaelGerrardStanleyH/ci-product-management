@@ -43,7 +43,10 @@
                             <img src="/img/<?= $product->getImage(); ?>" class="img-thumbnail img-preview">
                         </div>
                         <div class="col-sm-8">
-                            <input class="form-control" type="file" id="image" name="image" onchange="previewImg()">
+                            <input class="form-control <?= validation_show_error('image') ? 'is-invalid' : ''; ?>" type="file" id="image" name="image" onchange="previewImg()">
+                        </div>
+                        <div class="row mb-3">
+                            <?= validation_show_error('image') ?>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Edit Produk</button>

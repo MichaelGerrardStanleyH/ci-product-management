@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <h2 class="my-3">Form Tambah Produk Elektronik</h1>
+            <h2 class="my-3">Add Fashion Product Form</h1>
 
-                <form action="/elektronik/save" method="post" enctype="multipart/form-data">
+                <form action="/fashion/save" method="post" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <label for="name" class="col-sm-2 col-form-label">Product Name</label>
                         <div class="col-sm-10">
@@ -17,12 +17,12 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="electric" class="col-sm-2 col-form-label">Electric</label>
+                        <label for="type" class="col-sm-2 col-form-label">Type</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control <?= (validation_show_error('electric')) ? 'is-invalid' : '' ?>" id="electric" name="electric">
+                            <input type="text" class="form-control <?= (validation_show_error('type')) ? 'is-invalid' : '' ?>" id="type" name="type">
                         </div>
                         <div class="row mb-3">
-                            <?= validation_show_error('electric') ?>
+                            <?= validation_show_error('type') ?>
                         </div>
                     </div>
                     <div class="form-group row">

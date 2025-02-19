@@ -11,12 +11,15 @@
                         <a class="nav-link active" aria-current="page" href="/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/elektronik">Produk Elektronik</a>
+                        <a class="nav-link" href="/electronic">Electronic Product</a>
                     </li>
-                    <?php if(session()->get('isLoggedIn') != null) : ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/auth/logout">Logout</a>
+                        <a class="nav-link" href="/fashion">Fashion Product</a>
                     </li>
+                    <?php if (session()->get('isLoggedIn') != null) : ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auth/logout">Logout</a>
+                        </li>
                     <?php endif; ?>
             </div>
         </div>

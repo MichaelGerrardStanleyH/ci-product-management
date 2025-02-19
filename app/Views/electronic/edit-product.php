@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <h2 class="my-3">Form Edit Produk Elektronik</h1>
+            <h2 class="my-3">Edit Electronic Product Form</h1>
 
-                <form action="/elektronik/update/<?= $product->getIdBaseProduct(); ?>" method="post" enctype="multipart/form-data">
+                <form action="/electronic/update/<?= $product->getIdBaseProduct(); ?>" method="post" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <label for="name" class="col-sm-2 col-form-label">Product Name</label>
                         <div class="col-sm-10">

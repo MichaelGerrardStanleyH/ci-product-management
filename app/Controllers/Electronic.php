@@ -7,7 +7,7 @@ use App\Models\ProductElektronikModel;
 use App\Models\ElektronikModel;
 use Exception;
 
-class Elektronik extends BaseController
+class Electronic extends BaseController
 {
 
     private $db;
@@ -44,7 +44,7 @@ class Elektronik extends BaseController
             'title' => 'Electronic Product',
             'products' => $products
         ];
-        return view('elektronik/index', $data);
+        return view('electronic/index', $data);
     }
 
 
@@ -75,7 +75,7 @@ class Elektronik extends BaseController
             'title' => 'Form Tambah Produk Elektronik',
         ];
 
-        return view('elektronik/add-product', $data);
+        return view('electronic/add-product', $data);
     }
 
     public function save()
@@ -89,7 +89,7 @@ class Elektronik extends BaseController
                 'electric' => 'required',
             ]
         ])) {
-            return redirect()->to('/elektronik/create')->withInput();
+            return redirect()->to('/electronic/create')->withInput();
         }
 
         $name = $this->request->getVar('name');
@@ -127,7 +127,7 @@ class Elektronik extends BaseController
             throw new Exception($e->getMessage());
         }
 
-        return redirect()->to('/elektronik');
+        return redirect()->to('/electronic');
     }
 
     public function edit($id)
@@ -141,7 +141,7 @@ class Elektronik extends BaseController
             'product' => $product
         ];
 
-        return view('/elektronik/edit-product', $data);
+        return view('/electronic/edit-product', $data);
     }
 
     public function update($id)
@@ -154,7 +154,7 @@ class Elektronik extends BaseController
                 'electric' => 'required',
             ]
         ])) {
-            return redirect()->to('/elektronik/edit/' . $id)->withInput();
+            return redirect()->to('/electronic/edit/' . $id)->withInput();
         }
 
         $name = $this->request->getVar('name');
@@ -198,27 +198,35 @@ class Elektronik extends BaseController
             throw new Exception($e->getMessage());
         }
 
-        return redirect()->to('/elektronik');
+        return redirect()->to('/electronic');
     }
 
     public function delete($id)
     {
         try {
+
+            $product = $this->getProductById($id);
+            if($product->getImage() != 'default.jpg'){
+                unlink('img/' . $product->getImage());
+            }
+
+
             $stmt = $this->db->prepare("DELETE FROM base_product WHERE id_base_product = ?;");
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $stmt->close();
+
         } catch (Exception $e) {
             $this->db->rollback();
             throw new Exception($e->getMessage());
         }
-        return redirect()->to('/elektronik');
+        return redirect()->to('/electronic');
     }
     
 
 
     public function product()
     {
-        return view('elektronik/index');
+        return view('electronic/index');
     }
 }

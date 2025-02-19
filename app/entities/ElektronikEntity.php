@@ -20,25 +20,22 @@ class ElektronikEntity extends BaseProductEntity
         }
     }
 
-    // Getter for AliranListrik
     public function getElectric(): int
     {
         return $this->electric;
     }
 
-    // Setter for AliranListrik
     public function setElectric(int $electric)
     {
         $this->electric=$electric;
     }
 
-    // Getter for AliranListrik
+
     public function getIdElectronicProduct(): int
     {
         return $this->id_electronic_product;
     }
 
-    // Setter for AliranListrik
     public function setIdElectronicProduct(int $id_electronic_product)
     {
         $this->id_electronic_product=$id_electronic_product;

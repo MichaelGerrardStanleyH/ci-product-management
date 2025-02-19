@@ -1,7 +1,7 @@
 ## CodeIgniter 4 - Product Management Application
 
 ### Feature
-- Login/Logout
+- Login/Logout, NOTE: LOGIN MENGGUNAKAN USERNAME: admin, PASSWORD: admin
 - CRUD ElectronicProduct extends dari BaseProduct
 - CRUD FashionProduct extends dari BaseProduct
 - Upload image
@@ -11,7 +11,7 @@
 - port: 3306
 - username: root
 - password: 12345
-- jika ingin menggunakan konfigurasi sendiri bisa diubah pada file Controller dan .env
+- jika ingin menggunakan konfigurasi sendiri bisa diubah pada file Electronic & Fashion di folder controller dan .env
 
 ### SQL DDL Query
 CREATE TABLE base_product(

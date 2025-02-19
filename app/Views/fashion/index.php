@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1>Electronic Product Page</h1>
+            <h1>Fashion Product Page</h1>
 
-            <a href="/fashion/create" class="btn btn-primary">Add Electronic Product</a>
+            <a href="/fashion/create" class="btn btn-primary">Add Fashion Product</a>
 
             <table class="table table-striped">
                 <thead>

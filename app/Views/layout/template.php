@@ -1,3 +1,4 @@
+<!-- template semua page -->
 <!doctype html>
 <html lang="en">
 

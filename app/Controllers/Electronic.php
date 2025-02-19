@@ -7,6 +7,7 @@ use App\Models\ProductElektronikModel;
 use App\Models\ElektronikModel;
 use Exception;
 
+// Class controller electronic
 class Electronic extends BaseController
 {
 
@@ -22,6 +23,7 @@ class Electronic extends BaseController
         }
     }
 
+    // get all electronic product dari database yang return class view index.php
     public function index()
     {
         try {
@@ -48,7 +50,7 @@ class Electronic extends BaseController
     }
 
 
-    // 🔥 Ambil User Berdasarkan ID
+    // get electronic product by id dari database yang return class ElektronikEntity
     public function getProductById($id)
     {
 
@@ -67,17 +69,19 @@ class Electronic extends BaseController
         return $product ? new ElektronikEntity($product) : null;
     }
 
+    // return class view create.php 
     public function create()
     {
         helper('form');
 
         $data = [
-            'title' => 'Form Tambah Produk Elektronik',
+            'title' => 'Add Electronic Product Form',
         ];
 
         return view('electronic/add-product', $data);
     }
 
+    // insert produk elektronik ke database dan return kew view index.php
     public function save()
     {
 
@@ -87,6 +91,9 @@ class Electronic extends BaseController
             ],
             'electric' => [
                 'electric' => 'required',
+            ],
+            'image' => [
+                'rules' => 'max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
             ]
         ])) {
             return redirect()->to('/electronic/create')->withInput();
@@ -130,6 +137,7 @@ class Electronic extends BaseController
         return redirect()->to('/electronic');
     }
 
+    //return class view edit-product.php
     public function edit($id)
     {
         helper('form');
@@ -137,13 +145,14 @@ class Electronic extends BaseController
         $product = $this->getProductById($id);
 
         $data = [
-            'title' => 'Edit Elektronik Product',
+            'title' => 'Edit Electronic Product Form',
             'product' => $product
         ];
 
         return view('/electronic/edit-product', $data);
     }
 
+    //update elektronik produk ke database dan return class view index.php
     public function update($id)
     {
         if (!$this->validate([
@@ -152,6 +161,9 @@ class Electronic extends BaseController
             ],
             'electric' => [
                 'electric' => 'required',
+            ],
+            'image' => [
+                'rules' => 'max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
             ]
         ])) {
             return redirect()->to('/electronic/edit/' . $id)->withInput();
@@ -201,12 +213,13 @@ class Electronic extends BaseController
         return redirect()->to('/electronic');
     }
 
+    //delete produk elektronik by id dari database
     public function delete($id)
     {
         try {
 
             $product = $this->getProductById($id);
-            if($product->getImage() != 'default.jpg'){
+            if ($product->getImage() != 'default.jpg') {
                 unlink('img/' . $product->getImage());
             }
 
@@ -215,18 +228,10 @@ class Electronic extends BaseController
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $stmt->close();
-
         } catch (Exception $e) {
             $this->db->rollback();
             throw new Exception($e->getMessage());
         }
         return redirect()->to('/electronic');
-    }
-    
-
-
-    public function product()
-    {
-        return view('electronic/index');
     }
 }

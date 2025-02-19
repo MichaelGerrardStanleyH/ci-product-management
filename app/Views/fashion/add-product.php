@@ -19,7 +19,7 @@
                     <div class="row mb-3">
                         <label for="type" class="col-sm-2 col-form-label">Type</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control <?= (validation_show_error('type')) ? 'is-invalid' : '' ?>" id="type" name="type">
+                            <input type="text" class="form-control <?= (validation_show_error('type')) ? 'is-invalid' : '' ?>" id="type" name="type" value="<?= old('type'); ?>">
                         </div>
                         <div class="row mb-3">
                             <?= validation_show_error('type') ?>
@@ -31,7 +31,10 @@
                             <img src="/img/default.jpg" class="img-thumbnail img-preview">
                         </div>
                         <div class="col-sm-8">
-                            <input class="form-control" type="file" id="image" name="image" onchange="previewImg()">
+                            <input class="form-control <?= (validation_show_error('image')) ? 'is-invalid' : '' ?>" type="file" id="image" name="image" onchange="previewImg()">
+                        </div>
+                        <div class="row mb-3">
+                            <?= validation_show_error('image') ?>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Product</button>

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+// Class controller AUTH
 class Auth extends BaseController
 {
 
@@ -35,8 +36,7 @@ class Auth extends BaseController
 
     public function logout()
     {
-        $session = session();  // Memulai session
-        $session->destroy();
+        session()->destroy();
         return redirect()->to('/');
     }
 }

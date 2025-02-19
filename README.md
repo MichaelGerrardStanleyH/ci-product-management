@@ -53,4 +53,5 @@ REFERENCES base_product(id_base_product) ON DELETE CASCADE;
 ### Composer & Codeigniter Command
 - composer install: install dependency-dependency yang dibutuhkan
 - php spark serve: menjalankan aplikasi CodeIgniter4
+- jalankan aplikasi di http://localhost:8080
 
